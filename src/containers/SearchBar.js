@@ -1,18 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { find, union } from 'lodash';
-import { Radio } from 'antd';
+import { find } from 'lodash';
 import states from '../data/states';
 import * as selectionActions from '../state/selections/actions';
 
 import { getDistance, getFilters, getLocation, getSearchType } from '../state/selections/selectors';
-import { getCurrentIssueFocuses, getColorMap } from '../state/events/selectors';
+import { getColorMap } from '../state/events/selectors';
 
 import SearchInput from '../components/SearchInput';
 import DistanceFilter from '../components/DistanceSlider';
 
-const RadioGroup = Radio.Group;
 /* eslint-disable */
 require('style-loader!css-loader!antd/es/radio/style/index.css');
 /* eslint-enable */
@@ -36,8 +34,6 @@ class SearchBar extends React.Component {
     this.onTextChange = this.onTextChange.bind(this);
     this.searchHandler = this.searchHandler.bind(this);
     this.distanceHandler = this.distanceHandler.bind(this);
-    this.switchSearchType = this.switchSearchType.bind(this);
-    this.renderSwitch = this.renderSwitch.bind(this);
   }
 
   componentWillMount() {
@@ -71,7 +67,6 @@ class SearchBar extends React.Component {
       searchType,
       searchByZip,
       searchByQueryString,
-      searchByDistrict,
     } = this.props;
 
     resetSearchByQueryString();
@@ -92,14 +87,6 @@ class SearchBar extends React.Component {
         filterBy,
         filterValue: query,
       });
-    } else if (searchType === 'district') {
-      const stateMatch = query.match(/([A-Z]|[a-z]){2}/g)[0];
-      const districtMatch = query.match(/([0-9]{2})|([0-9]{1})/g)[0];
-      if (stateMatch.length > 0 && districtMatch.length > 0) {
-        const state = query.match(/([A-Z]|[a-z]){2}/g)[0];
-        const district = Number(query.match(/([0-9]{2})|([0-9]{1})/g)[0]);
-        return searchByDistrict({ district, state });
-      }
     }
     return resetSelections();
   }
@@ -108,34 +95,6 @@ class SearchBar extends React.Component {
     const { setDistance } = this.props;
     return setDistance(value);
   }
-
-  switchSearchType(e) {
-    const searchType = e.target.value;
-    const {
-      changeSearchType,
-    } = this.props;
-    changeSearchType(searchType);
-  }
-
-  renderSwitch() {
-    const {
-      searchType,
-      mapType,
-    } = this.props;
-    if (mapType === 'group') {
-      return null;
-    }
-    return (
-      <div className="search-type-container">
-        <span className="search-by-title">Search by </span>
-        <RadioGroup onChange={this.switchSearchType} value={searchType}>
-          <Radio value="proximity">proximity</Radio>
-          <Radio value="district">district</Radio>
-        </RadioGroup>
-      </div>
-    );
-  }
-
 
   render() {
     const {
@@ -150,8 +109,6 @@ class SearchBar extends React.Component {
           submitHandler={this.searchHandler}
           searchType={searchType}
         />
-        {this.renderSwitch()}
-        {/* {this.renderFilterBar()} */}
         <DistanceFilter
           changeHandler={this.distanceHandler}
           distance={distance}
@@ -184,7 +141,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 SearchBar.propTypes = {
-  changeSearchType: PropTypes.func.isRequired,
   colorMap: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   distance: PropTypes.number.isRequired,
   mapType: PropTypes.string.isRequired,
@@ -203,7 +159,7 @@ SearchBar.propTypes = {
 };
 
 SearchBar.defaultProps = {
-  searchType: 'proximity',
+  searchType: 'proximity'
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
