@@ -1,4 +1,4 @@
-import { uniqBy, filter, includes } from 'lodash';
+import { filter, includes } from 'lodash';
 import { createSelector } from 'reselect';
 import { computeDistanceBetween, LatLng } from 'spherical-geometry-js';
 
@@ -14,14 +14,11 @@ import {
 
 export const getEvents = state => state.events.allEvents;
 export const getColorMap = state => state.events.filterColors;
-export const getCurrentIssueFocuses = createSelector([getEvents], events => uniqBy(events, 'issueFocus').map(item => item.issueFocus));
+export const getCurrentIssueFocuses = state => (['2020 Candidate Event']);
 
 const getEventsFilteredByKeywordArray = createSelector(
   [getEvents, getFilters],
   (allEvents, filterArray) => {
-    if (filterArray === 'init') {
-      return allEvents;
-    }
     return filter(allEvents, o => includes(filterArray, o.issueFocus));
   },
 );
