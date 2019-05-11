@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700');
+
+h2,
+h3 {
+  margin: 10px;
+  font-size: 1.2em;
+}
+
+h3 {
+  font-size: 1em;
+}
+
+p {
+  font-size: 0.85em;
+  margin: 10px;
+  text-align: left;
+}
+
+.dash-title {
+  position: absolute;
+  margin-top: -100px;
+}
+
+/****** Group Style Typography ********/
+#groups-list {
+  font-family: 'Montserrat', sans-serif;
+}
+
+#group-location {
+  color: black;
+}
+
+.connect-text {
+  font-weight: 300;
+  color: black;
+  margin-left: 5px;
+  margin-top: 3px;
+  display: inline-block;
+}
+
+.groups-container .mapboxgl-popup-content .connect-text-popover {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: none;
+  font-weight:400;
+}
+
+/****** Event Style Typography ********/
+#events-list {
+  font-family: 'Montserrat', sans-serif;
+}
+#events-list {
+  .semi-bold {
+    @include montserrat-semi-bold;
+  }
+}
+
+#events-list .ant-list-item-meta-title {
+  font-weight: 700;
+}
