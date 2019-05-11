@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 
 import events from '../state/events/reducers';
 import selections from '../state/selections/reducers';
-// import reporter from '../state/middleware/reporter';
 
 export default () => {
   const store = createStore(
