@@ -11,7 +11,6 @@ import { getCurrentIssueFocuses, getColorMap } from '../state/events/selectors';
 
 import SearchInput from '../components/SearchInput';
 import DistanceFilter from '../components/DistanceSlider';
-import IssueFilterTags from '../components/IssueFilterTags';
 
 const RadioGroup = Radio.Group;
 /* eslint-disable */
@@ -38,7 +37,6 @@ class SearchBar extends React.Component {
     this.searchHandler = this.searchHandler.bind(this);
     this.distanceHandler = this.distanceHandler.bind(this);
     this.switchSearchType = this.switchSearchType.bind(this);
-    this.renderFilterBar = this.renderFilterBar.bind(this);
     this.renderSwitch = this.renderSwitch.bind(this);
   }
 
@@ -115,36 +113,8 @@ class SearchBar extends React.Component {
     const searchType = e.target.value;
     const {
       changeSearchType,
-      issues,
-      onFilterChanged,
     } = this.props;
-    if (searchType === 'district') {
-      onFilterChanged(union(issues, ['Town Hall']));
-    }
     changeSearchType(searchType);
-  }
-
-  renderFilterBar() {
-    const {
-      issues,
-      onFilterChanged,
-      selectedFilters,
-      colorMap,
-      mapType,
-    } = this.props;
-    if (mapType === 'group') {
-      return null;
-    }
-    return (
-      <div className="input-group-filters">
-        <IssueFilterTags
-          colorMap={colorMap}
-          issues={issues}
-          onFilterChanged={onFilterChanged}
-          selectedFilters={selectedFilters}
-        />
-      </div>
-    );
   }
 
   renderSwitch() {
@@ -181,7 +151,7 @@ class SearchBar extends React.Component {
           searchType={searchType}
         />
         {this.renderSwitch()}
-        {this.renderFilterBar()}
+        {/* {this.renderFilterBar()} */}
         <DistanceFilter
           changeHandler={this.distanceHandler}
           distance={distance}
@@ -195,7 +165,6 @@ class SearchBar extends React.Component {
 const mapStateToProps = state => ({
   colorMap: getColorMap(state),
   distance: getDistance(state),
-  issues: getCurrentIssueFocuses(state),
   location: getLocation(state),
   searchType: getSearchType(state),
   selectedFilters: getFilters(state),
@@ -204,7 +173,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   changeSearchType: searchType => dispatch(selectionActions.changeSearchType(searchType)),
-  onFilterChanged: filters => dispatch(selectionActions.setFilters(filters)),
   resetSearchByQueryString: () => dispatch(selectionActions.resetSearchByQueryString()),
   resetSearchByZip: () => dispatch(selectionActions.resetSearchByZip()),
   resetSelections: () => dispatch(selectionActions.resetSelections()),
@@ -219,9 +187,7 @@ SearchBar.propTypes = {
   changeSearchType: PropTypes.func.isRequired,
   colorMap: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   distance: PropTypes.number.isRequired,
-  issues: PropTypes.arrayOf(PropTypes.string).isRequired,
   mapType: PropTypes.string.isRequired,
-  onFilterChanged: PropTypes.func.isRequired,
   resetSearchByQueryString: PropTypes.func.isRequired,
   resetSearchByZip: PropTypes.func.isRequired,
   resetSelections: PropTypes.func.isRequired,
