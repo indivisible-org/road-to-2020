@@ -68,12 +68,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/indivisible-org/indivisible-map.git"
+    "url": "git+https://github.com/indivisible-org/road-to-2020.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/indivisible-org/indivisible-map/issues"
+    "url": "https://github.com/indivisible-org/road-to-2020/issues"
   },
-  "homepage": "https://meganrm.github.io/indivisible-map/"
+  "homepage": "https://meganrm.github.io/road-to-2020/"
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import GroupsDashboard from '../containers/GroupsDashboard';
 import EventsDashboard from '../containers/EventsDashboard';
 
 const AppRouter = () => (
@@ -8,7 +7,6 @@ const AppRouter = () => (
     <div>
       <Switch>
         <Route path="/events" component={EventsDashboard} />
-        <Route path="/groups" component={GroupsDashboard} />
       </Switch>
     </div>
   </BrowserRouter>
