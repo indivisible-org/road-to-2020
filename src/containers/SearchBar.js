@@ -34,7 +34,6 @@ class SearchBar extends React.Component {
     this.onTextChange = this.onTextChange.bind(this);
     this.searchHandler = this.searchHandler.bind(this);
     this.distanceHandler = this.distanceHandler.bind(this);
-    this.renderSwitch = this.renderSwitch.bind(this);
   }
 
   componentWillMount() {
@@ -97,19 +96,6 @@ class SearchBar extends React.Component {
     return setDistance(value);
   }
 
-  renderSwitch() {
-    const {
-      mapType,
-    } = this.props;
-    if (mapType === 'group') {
-      return null;
-    }
-    return (
-      <div className="search-type-container" />
-    );
-  }
-
-
   render() {
     const {
       distance,
@@ -123,7 +109,6 @@ class SearchBar extends React.Component {
           submitHandler={this.searchHandler}
           searchType={searchType}
         />
-        {this.renderSwitch()}
         <DistanceFilter
           changeHandler={this.distanceHandler}
           distance={distance}
